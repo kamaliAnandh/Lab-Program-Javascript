@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Keep Guessing</h1>
+    <input type="number" id="guessInput"placeholder="Enter guess number">
+    <br><br>
+    <button onclick="guessGame()">submit</button>
+    <br><br>
+    <div id="hint"></div>
+    <script>
+        let target=75;
+        function guessGame(){
+            let guess=parseInt(document.getElementById("guessInput").value);
+            let hint="";
+            if(guess<target)hint="Too Low";
+            else if(guess>target)hint="Too High";
+            else hint="Correct";
+            document.getElementById("hint").innerText=hint;
+
+            
+        }
+    </script>
+</body>
+</html>
