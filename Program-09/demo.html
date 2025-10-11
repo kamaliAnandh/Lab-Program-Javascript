@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Load User Data</title>
+  <style>
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 20px;
+    }
+    button {
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+      li {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .user-info {
+        background-color: plum;
+        padding: 15px;
+        border-radius: 6px;
+      }
+      .user-info h2 {
+        margin-top: 0;
+        font-size: 20px;
+      }
+      .user-info p {
+        margin: 6px 0;
+      }
+      .error {
+        color: red;
+        margin-top: 20px;
+      }
+    </style>
+   
+</head>
+<body>
+  <h1>Load User Data</h1>
+  <button id="loadBtn" onclick="loadData()">Load Users</button>
+  <div id="loadData">Click the button to load users.</div>
+
+  <script>
+    function loadData() {
+      const container = document.getElementById('loadData');
+      const button = document.getElementById('loadBtn');
+
+      container.textContent = 'Loading...';
+      button.disabled = true;
+
+      fetch('https://fakestoreapi.com/users')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.json();
+        })
+        .then((data) => {
+          const list = data.map((user) => {
+            // Compose full name
+            const fullName = `${user.name.firstname} ${user.name.lastname}`;
+
+            // Compose address string
+            const address = `${user.address.number} ${user.address.street}, ${user.address.city}, ${user.address.zipcode}`;
+
+            return `
+              <li>
+                <div class="user-info">
+                  <h2>${fullName}</h2>
+                  <p><strong>Username:</strong> ${user.username}</p>
+                  <p><strong>Email:</strong> ${user.email}</p>
+                  `;
+          }).join('');
+
+          container.innerHTML = `<ul>${list}</ul>`;
+        })
+        .catch(error => {
+          container.innerHTML = `<p class="error">Error loading data: ${error.message}</p>`;
+        })
+        .finally(() => {
+          button.disabled = false;
+        });
+    }
+  </script>
+</body>
+</html>
+
+        

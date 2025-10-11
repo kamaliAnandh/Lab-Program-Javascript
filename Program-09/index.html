@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .list{
+            background-color: rgb(160, 221, 211);
+        }
+
+    </style>
+</head>
+<body>
+    <h1>load API data</h1>
+    <button onclick="loadData()">Load</button>
+    <div id="loadData">Loading...</div>
+    <script>
+        function loadData(){
+            fetch("https://fakestoreapi.com/products")
+             .then(response => response.json())
+             .then((data) => {
+                const list = data.map((product) => `
+                <li>
+                    <img src="${product.image}" width="50"/>
+
+                    <div class="list">
+                        <h2>${product.title}</h2>
+                        <p>Price:${product.price}</p>
+                        <p>Category:${product.category}</p>
+                        <p>Description:${product.description}</p>                        
+                       
+                    </div>
+
+                   
+                   
+                   
+                   
+                </li>
+                `
+                ).join("");
+                document.getElementById("loadData").innerHTML=`<ul>${list}</ul>`;
+
+             })
+
+        }
+       
+    </script>
+</body>
+</html>
