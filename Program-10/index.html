@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Slider</title>
+<style>
+.slider {
+text-align: center;
+position: relative;
+width: 60%;
+margin: auto;
+}
+.slider img {
+width: 100%;
+height: auto;
+}
+.slider button {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+padding: 10px;
+background-color: rgba(0, 0, 0, 0.5);
+color: white;
+border: none;
+cursor: pointer;
+}
+#prevBtn {
+left: 10px;
+}
+#nextBtn {
+right: 10px;
+}
+</style>
+</head>
+<body>
+<div class="slider">
+<img src="https://image-processor-storage.s3.us-west-2.amazonaws.com/images/3cf61c1011912a2173ea4dfa260f1108/halo-of-neon-ring-illuminated-in-the-stunning-landscape-of-yosemite.jpg" class="slider-image" alt="Image 1">
+<button id="prevBtn">Previous</button>
+<button id="nextBtn">Next</button>
+</div>
+<script>
+let images = ["https://i0.wp.com/picjumbo.com/wp-content/uploads/calming-nature-wallpaper-free-image.jpeg?w=600&quality=80", "https://st2.depositphotos.com/1002200/6221/i/450/depositphotos_62210177-stock-photo-autumn-mountain-landscape.jpg", "https://st.depositphotos.com/1035350/2894/i/450/depositphotos_28949601-stock-photo-smoky-mountains.jpg"];
+let currentIndex = 0;
+const imgElement = document.querySelector(".slider-image");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+// Manual image navigation
+nextBtn.addEventListener("click", () => {
+currentIndex = (currentIndex + 1) % images.length;
+imgElement.src = images[currentIndex];
+});
+prevBtn.addEventListener("click", () => {
+currentIndex = (currentIndex - 1 + images.length) % images.length;
+imgElement.src = images[currentIndex];
+});
+// Automatic image change every 3 seconds
+setInterval(() => {
+currentIndex = (currentIndex + 1) % images.length;
+imgElement.src = images[currentIndex];
+}, 3000);
+</script>
+</body>
+</html>
